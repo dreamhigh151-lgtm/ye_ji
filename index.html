@@ -1,108 +1,94 @@
 <!doctype html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>루아비스웨딩 중구점 셔틀버스 안내</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>이미지 전용 페이지</title>
   <style>
-    :root{--bg:#f7f7f8;--card:#fff;--accent:#e06d6d}
-    *{box-sizing:border-box}
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,"Noto Sans KR",sans-serif;background:var(--bg);color:#222}
-    .wrap{max-width:980px;margin:40px auto;padding:20px}
-    header{display:flex;align-items:center;gap:12px}
-    header img{width:56px;height:56px;border-radius:8px;object-fit:cover}
-    h1{font-size:1.6rem;margin:0}
-    p.lead{color:#555;margin:6px 0 20px}
+    /* 전체 리셋 및 기본 */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans KR", sans-serif;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
 
-    .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
-    .card{background:var(--card);border-radius:12px;padding:10px;box-shadow:0 6px 18px rgba(15,15,15,0.06);cursor:pointer;overflow:hidden}
-    .card img{width:100%;height:180px;object-fit:cover;border-radius:8px}
-    .caption{padding:8px 4px 0;font-size:0.95rem;color:#333}
+    /* 이미지 컨테이너: 화면 가득 또는 중앙 맞춤 */
+    .hero {
+      width: 100%;
+      height: 100%;
+      display: grid;
+      place-items: center;
+      position: relative;
+    }
 
-    footer{margin-top:22px;color:#666;font-size:0.9rem}
+    /* 방법 1: cover 방식 (채우기) */
+    .hero .cover {
+      position: absolute;
+      inset: 0;
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
 
-    /* lightbox */
-    .lightbox{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(10,10,10,0.65);z-index:60}
-    .lightbox.active{display:flex}
-    .lightbox img{max-width:92%;max-height:86%;border-radius:8px;box-shadow:0 10px 30px rgba(0,0,0,0.5)}
-    .closeBtn{position:fixed;top:20px;right:24px;background:var(--card);border-radius:999px;padding:8px 10px;font-weight:600;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,0.12)}
+    /* 방법 2: contain 방식 (온전한 이미지 표시, 여백 중심) */
+    .hero .contain-wrap {
+      max-width: 1200px; /* 이미지 최대 너비 (원하면 변경) */
+      width: 100%;
+      padding: 20px;
+      z-index: 2; /* cover 위에 놓고 싶지 않다면 필요 없음 */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero .contain {
+      width: 100%;
+      height: auto;
+      max-height: 100vh;
+      object-fit: contain;
+      display: block;
+      border-radius: 6px; /* 원치 않으면 제거 */
+      box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+      background: #111;
+    }
 
-    @media(max-width:420px){
-      .card img{height:140px}
-      header img{width:48px;height:48px}
+    /* 간단한 닫기/메모 버튼 (선택) */
+    .note {
+      position: absolute;
+      left: 12px;
+      bottom: 12px;
+      color: rgba(255,255,255,0.85);
+      font-size: 13px;
+      z-index: 5;
+      background: rgba(0,0,0,0.35);
+      padding: 8px 10px;
+      border-radius: 999px;
+      backdrop-filter: blur(4px);
+    }
+
+    @media (max-width: 420px) {
+      .hero .contain-wrap { padding: 12px; }
+      .note { font-size: 12px; padding: 6px 8px; left:10px; bottom:10px; }
     }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <header>
-      <div>
-        <h1>서울역에서 셔틀버스 안내</h1>
-        <!-- <p class="lead">이미지만 깔끔하게 보여주는 간단한 웹페이지 예시입니다. 이미지를 클릭하면 크게 볼 수 있어요.</p> -->
-      </div>
-    </header>
+  <div class="hero">
+    <!-- ▼ 선택지 A: 화면 전체를 이미지로 채우고 싶으면 아래 <img class="cover"> 만 사용 -->
+    <!-- <img class="cover" src="https://your-image-url.com/image.jpg" alt="대표 이미지" loading="eager"> -->
 
-    <main>
-      <section class="gallery" id="gallery">
-        <!-- 이미지 카드들: src 교체해서 사용하세요 -->
-      
-          <img src="https://github.com/user-attachments/assets/6a35779c-3888-4a7a-a824-4dd07eb12798" alt="셔틀버스">
-          <div class="caption">서울역 셔틀버스 타는법</div>
+    <!-- ▼ 선택지 B: 이미지 온전하게 보이게 (비율 유지, 중앙 정렬) -->
+    <div class="contain-wrap">
+      <img class="contain" src="<!-- REPLACE HERE: 이미지 URL 또는 로컬 경로 -->" alt="대표 이미지" loading="lazy">
+    </div>
 
-
-        <!-- <article class="card" data-full="https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1600&auto=format&fit=crop">
-          <img loading="lazy" src="https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=800&auto=format&fit=crop" alt="사진2">
-          <div class="caption">조용한 카페의 한 컷</div>
-        </article>
-
-        <article class="card" data-full="https://images.unsplash.com/photo-1529257414772-1961b5f4f7d1?q=80&w=1600&auto=format&fit=crop">
-          <img loading="lazy" src="https://images.unsplash.com/photo-1529257414772-1961b5f4f7d1?q=80&w=800&auto=format&fit=crop" alt="사진3">
-          <div class="caption">여행의 기억</div>
-        </article> -->
-
-      </section>
-    </main>
-
-    <footer>
-      이미지 출처: Unsplash (샘플 이미지). 이미지 파일은 로컬로 교체하거나 다른 URL을 넣어 사용하세요.
-    </footer>
+    <!-- 작은 안내 문구 (원치 않으면 삭제) -->
+    <div class="note">이미지를 교체하려면 src 속성의 URL을 바꿔주세요</div>
   </div>
-
-  <!-- 라이트박스 스크립트: 이미지 클릭하면 큰 이미지 보기 -->
-  <div class="lightbox" id="lightbox" role="dialog" aria-hidden="true">
-    <button class="closeBtn" id="lbClose">✕</button>
-    <img id="lbImg" src="" alt="확대한 사진">
-  </div>
-
-  <script>
-    const gallery = document.getElementById('gallery');
-    const lightbox = document.getElementById('lightbox');
-    const lbImg = document.getElementById('lbImg');
-    const lbClose = document.getElementById('lbClose');
-
-    gallery.addEventListener('click', e => {
-      const card = e.target.closest('.card');
-      if(!card) return;
-      const full = card.dataset.full || card.querySelector('img').src;
-      lbImg.src = full;
-      lightbox.classList.add('active');
-      lightbox.setAttribute('aria-hidden','false');
-    });
-
-    lbClose.addEventListener('click', () => {
-      lightbox.classList.remove('active');
-      lightbox.setAttribute('aria-hidden','true');
-      lbImg.src = '';
-    });
-
-    lightbox.addEventListener('click', e => {
-      if(e.target === lightbox) lbClose.click();
-    });
-
-    // 키보드 ESC로 닫기
-    document.addEventListener('keydown', e=>{
-      if(e.key === 'Escape' && lightbox.classList.contains('active')) lbClose.click();
-    });
-  </script>
 </body>
 </html>
